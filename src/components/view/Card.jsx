@@ -21,13 +21,13 @@ const Card = () => {
 
     <section className="px-4 py-28">
       <div className="max-w-355 mx-auto">
-        <h1 className="font-black text-6xl text-center py-9">SEARCH FILTER </h1>
+        <h1 className="font-black text-6xl text-center py-9 text-navy-blue">SEARCH FILTER </h1>
         <div className="flex gap-4 items-center justify-center flex-wrap">
             <input type="text" placeholder="Seacrch Category" value={search} onChange={(e) => setSearch(e.target.value)} className="w-80 h-14 border border-navy-blue rounded-xl outline-none px-5 font-normal text-lg" />
-            <button onClick={() => setCategory("All")} className="text-2xl font-bold py-4 px-8 text-white bg-navy-blue rounded-2xl cursor-pointer ">All</button>
-            <button onClick={() => setCategory("Gaming")} className="text-2xl font-bold py-4 px-8 text-white bg-navy-blue rounded-2xl cursor-pointer ">Gaming</button>
-            <button onClick={() => setCategory("Accessories")} className="text-2xl font-bold py-4 px-8 text-white bg-navy-blue rounded-2xl cursor-pointer ">Accessories</button>
-            <button onClick={() => setCategory("Tools")} className="text-2xl font-bold py-4 px-8 text-white bg-navy-blue rounded-2xl cursor-pointer ">Tools</button>
+            <button onClick={() => setCategory("All")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "All" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}>All</button>
+            <button onClick={() => setCategory("Gaming")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Gaming" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}>Gaming</button>
+            <button onClick={() => setCategory("Accessories")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Accessories" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}>Accessories</button>
+            <button onClick={() => setCategory("Tools")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Tools" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"}  `}>Tools</button>
         </div>
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6.25 mt-9">
           {filterCard.map((item, index) => (
@@ -36,7 +36,7 @@ const Card = () => {
               className="border rounded-[30px] border-light-gray py-8 px-10 hover:border-transparent hover:shadow-[0px_8px_35px_0px_#0000001A] transition-all duration-300"
             >
               <img
-                className="w-86 h-63 border-none rounded-[20px]"
+                className="w-86 h-63 border-none rounded-[20px] object-contain"
                 src={item.Image}
                 alt="card-img"
               />
