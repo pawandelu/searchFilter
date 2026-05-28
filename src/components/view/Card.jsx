@@ -1,33 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CARD_DATA } from "../../utils/Helper";
+import { useNavigate } from "react-router-dom";
 
 const Card = () => {
-    const [category, setCategory] = useState("All")
-    const [search,  setSearch] = useState("")
-    
-    const filterCard = CARD_DATA.filter((item) => {
+  const navigate = useNavigate();
 
-        const categoryMatch = 
-        category === "All" || item.category === category
+  const [category, setCategory] = useState("All");
+  const [search, setSearch] = useState("");
 
-        const searchMatch = 
-        item.Heading.toLowerCase().includes(search.toLocaleLowerCase())
+  useEffect(() => {
+    !localStorage.getItem("isLogin") ? navigate("/") : null;
+  }, []);
 
-        return categoryMatch && searchMatch 
+  const filterCard = CARD_DATA.filter((item) => {
+    const categoryMatch = category === "All" || item.category === category;
 
-    }) 
+    const searchMatch = item.Heading.toLowerCase().includes(
+      search.toLocaleLowerCase(),
+    );
+
+    return categoryMatch && searchMatch;
+  });
 
   return (
-
     <section className="px-4 py-28">
       <div className="max-w-355 mx-auto">
-        <h1 className="font-black text-6xl text-center py-9 text-navy-blue">SEARCH FILTER </h1>
+        <div className="flex max-sm:flex-col justify-between max-sm:justify-center items-center w-full sm:mb-8 mb-5">
+          <h1 className="font-extrabold md:text-6xl sm:text-5xl text-4xl leading-[150%] text-navy-blue text-center">
+            {" "}
+            Search <span className="text-steel-blue"> Filter </span>
+          </h1>
+
+          <button
+            onClick={() => (localStorage.removeItem("isLogin"), navigate("/"))}
+            className="sm:px-6 px-3 sm:py-3 py-2 border border-transparent rounded-xl font-semibold sm:text-3xl text-2xl leading-[100%] text-center bg-red-500 text-white hover:text-red-500 hover:bg-white hover:border-red-500 cursor-pointer transition-all duration-500"
+          >
+            Logout
+          </button>
+        </div>
         <div className="flex gap-4 items-center justify-center flex-wrap">
-            <input type="text" placeholder="Seacrch Category" value={search} onChange={(e) => setSearch(e.target.value)} className="w-80 h-14 border border-navy-blue rounded-xl outline-none px-5 font-normal text-lg" />
-            <button onClick={() => setCategory("All")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "All" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}>All</button>
-            <button onClick={() => setCategory("Gaming")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Gaming" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}>Gaming</button>
-            <button onClick={() => setCategory("Accessories")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Accessories" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}>Accessories</button>
-            <button onClick={() => setCategory("Tools")} className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Tools" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"}  `}>Tools</button>
+          <input
+            type="text"
+            placeholder="Seacrch Category"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-80 h-14 border border-navy-blue rounded-xl outline-none px-5 font-normal text-lg"
+          />
+          <button
+            onClick={() => setCategory("All")}
+            className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "All" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setCategory("Gaming")}
+            className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Gaming" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}
+          >
+            Gaming
+          </button>
+          <button
+            onClick={() => setCategory("Accessories")}
+            className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Accessories" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"} `}
+          >
+            Accessories
+          </button>
+          <button
+            onClick={() => setCategory("Tools")}
+            className={`text-2xl font-bold py-4 px-8 rounded-2xl cursor-pointer ${category === "Tools" ? "bg-navy-blue text-white" : "text-navy-blue bg-white border border-navy-blue"}  `}
+          >
+            Tools
+          </button>
         </div>
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6.25 mt-9">
           {filterCard.map((item, index) => (
